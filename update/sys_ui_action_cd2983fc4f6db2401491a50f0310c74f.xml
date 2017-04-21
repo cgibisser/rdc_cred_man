@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name>close_rdc_task</action_name>
+        <active>true</active>
+        <client>true</client>
+        <comments>This will close the curent task</comments>
+        <condition>current.state !=3 &amp;&amp; current.state !=4</condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <hint/>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <name>Close Task</name>
+        <onclick>closeRDCTask()</onclick>
+        <order>100</order>
+        <script><![CDATA[function closeRDCTask(){
+	//Check for mandatory fields before closing task
+	if (g_form.getValue('assignment_group') == '') {
+		//Remove any existing field message, set assignment_group mandatory, and show a new field message
+		try {g_form.hideFieldMsg('assignment_group');} catch(e) {}
+		g_form.setMandatory('assignment_group', true);
+		g_form.showFieldMsg('assignment_group','Must assign to a group before closing','error');
+		g_form.setValue('state', 1);
+		alert('Must assign to a group before closing');
+		return false;  //Abort submission
+	}
+	if (g_form.getValue('assigned_to') == '') {
+		//Remove any existing field message, set assigned_to mandatory, and show a new field message
+		try {g_form.hideFieldMsg('assigned_to');} catch(e) {}
+		g_form.setMandatory('assigned_to', true);
+		g_form.showFieldMsg('assigned_to','Must assign to yourself before closing','error');
+		g_form.setValue('state', 1);
+		alert('Must assign to yourself before closing');
+		return false;  //Abort submission
+	}
+	
+	//Call the UI Action and skip the 'onclick' function
+	gsftSubmit(null, g_form.getFormElement(), 'close_rdc_task'); //MUST call the 'Action name' set in this UI Action
+	
+}
+
+//Code that runs without 'onclick'
+//Ensure call to server-side function with no browser errors
+if (typeof window == 'undefined')
+	serverResolve();
+
+function serverResolve(){
+	current.state = 3;
+	current.update();
+}]]></script>
+        <show_insert>true</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>xxpgrupe</sys_created_by>
+        <sys_created_on>2017-03-14 18:14:19</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>cd2983fc4f6db2401491a50f0310c74f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Close Task</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Remote Desktop Credential Management" source="x_aaro2_rdc_cred">18fc65ab4f5db6403ad149cf0310c7ef</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Remote Desktop Credential Management">18fc65ab4f5db6403ad149cf0310c7ef</sys_scope>
+        <sys_update_name>sys_ui_action_cd2983fc4f6db2401491a50f0310c74f</sys_update_name>
+        <sys_updated_by>xxpgrupe</sys_updated_by>
+        <sys_updated_on>2017-03-14 18:14:19</sys_updated_on>
+        <table>x_aaro2_rdc_cred_task</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>true</ui16_compatible>
+    </sys_ui_action>
+</record_update>

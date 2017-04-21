@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script/>
+        <description>This page will display the RDC update progress for the selected store workstations.</description>
+        <direct>true</direct>
+        <endpoint>x_aaro2_rdc_cred_Submitted.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h1>Remote Desktop Credential Management</h1>
+		</div>
+		<div class="panel-body">
+			<p>Your request ({{formData.recordNumber}}) has been submitted successfully.</p>
+			<p>The status of this request will be available from the <a target="_blank" href="/ess/requests.do">$[SP]My Requests </a>$[SP]page in the ESS.</p>
+		</div>
+		<div class="panel-footer">
+		</div>	
+	</div>
+</j:jelly>]]></html>
+        <name>Submitted</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>xxcjgibiss</sys_created_by>
+        <sys_created_on>2017-03-16 20:09:39</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>ee27352d4fad7a403ad149cf0310c7ee</sys_id>
+        <sys_mod_count>22</sys_mod_count>
+        <sys_name>Submitted</sys_name>
+        <sys_package display_value="Remote Desktop Credential Management" source="x_aaro2_rdc_cred">18fc65ab4f5db6403ad149cf0310c7ef</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Remote Desktop Credential Management">18fc65ab4f5db6403ad149cf0310c7ef</sys_scope>
+        <sys_update_name>sys_ui_page_ee27352d4fad7a403ad149cf0310c7ee</sys_update_name>
+        <sys_updated_by>xxcjgibiss</sys_updated_by>
+        <sys_updated_on>2017-04-14 18:32:30</sys_updated_on>
+    </sys_ui_page>
+</record_update>

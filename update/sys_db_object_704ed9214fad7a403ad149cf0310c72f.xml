@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_db_object">
+    <sys_db_object action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <actions_access>false</actions_access>
+        <alter_access>false</alter_access>
+        <client_scripts_access>false</client_scripts_access>
+        <configuration_access>false</configuration_access>
+        <create_access>false</create_access>
+        <create_access_controls>true</create_access_controls>
+        <delete_access>false</delete_access>
+        <extension_model/>
+        <is_extendable>false</is_extendable>
+        <label>Workstations</label>
+        <live_feed_enabled>false</live_feed_enabled>
+        <name>x_aaro2_rdc_cred_workstations</name>
+        <number_ref/>
+        <provider_class/>
+        <read_access>true</read_access>
+        <super_class/>
+        <sys_class_name>sys_db_object</sys_class_name>
+        <sys_created_by>xxpgrupe</sys_created_by>
+        <sys_created_on>2017-03-16 18:19:58</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>704ed9214fad7a403ad149cf0310c72f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Workstations</sys_name>
+        <sys_package display_value="Remote Desktop Credential Management" source="x_aaro2_rdc_cred">18fc65ab4f5db6403ad149cf0310c7ef</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Remote Desktop Credential Management">18fc65ab4f5db6403ad149cf0310c7ef</sys_scope>
+        <sys_update_name>sys_db_object_704ed9214fad7a403ad149cf0310c72f</sys_update_name>
+        <sys_updated_by>xxpgrupe</sys_updated_by>
+        <sys_updated_on>2017-03-16 18:19:58</sys_updated_on>
+        <update_access>false</update_access>
+        <user_role display_value="x_aaro2_rdc_cred.user" name="x_aaro2_rdc_cred.user">ebfc6de34f9db6403ad149cf0310c797</user_role>
+        <ws_access>true</ws_access>
+    </sys_db_object>
+</record_update>

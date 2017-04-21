@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_aaro2_rdc_cred.Utils</api_name>
+        <client_callable>false</client_callable>
+        <description>This will contains different scrips that can be called wihtin the Remote Desktop Credential Managemnt application. </description>
+        <name>Utils</name>
+        <script><![CDATA[var Utils = Class.create();
+Utils.prototype = {
+    initialize: function() {
+    },
+	
+	/*******************************************************************
+	* Returns a list of locations based on the user passed in
+	*
+	* @method getUserLocations
+	* @param {string} userSys - The sys_id of the user
+	* @return {Array} Returns an array of location objects. 
+	*******************************************************************/
+	getUserLocations : function(userSys){
+		var locations = []; //Declare an empty array to save the locations into.
+		var userGR = new GlideRecord('sys_user');
+		userGR.addQuery('sys_id', userSys);
+		userGR.query();
+		userGR.next();
+		locations.push(userGR.company);
+		if(userGR.company.u_franchise){
+			return this._getLocations(locations, 'FS');
+		}else{
+			return this._getLocations(locations, 'CS');
+		}
+	},
+	
+	/*******************************************************************
+	* Updates a workstations status
+	*
+	* @method updateWorkstationStatus
+	* @param {object} object - The object containing the sys_id of the 
+	* record to update and the status to change to.
+	* @return {string} Sys_id of the updated record.
+	*******************************************************************/
+	updateWorkstationStatus : function(object){
+		var workstationGR = new GlideRecord('x_aaro2_rdc_cred_workstations');
+		workstationGR.addQuery('sys_id', object.ID);
+		workstationGR.query();
+		workstationGR.next();
+		workstationGR.status = object.status;
+		return workstationGR.update();
+	},
+	
+	/*******************************************************************
+	* Returns a list of locations based on the user passed in
+	*
+	* @method getLocations
+	* @param {Array} locatoinsArray - Array of location objects
+	* @param {string} type - The location type that is being looked for
+	* @param {string} index - The index as the function loops
+	* @return {Array} Returns an array of location objects. 
+	*******************************************************************/
+	_getLocations : function(locationsArray, type, index){
+		var flagType = true;
+		var i=0; //Set i to 0
+		if(index){
+			i = index;
+		}
+		for(var j = 0; j < locationsArray.length; j++){
+			if(locationsArray[j].u_type != type){
+				flagType = false;
+				var currentSys = locationsArray[j].sys_id;
+				locationsArray.splice(j, 1);
+				var gr = new GlideRecord('core_company');
+				gr.addQuery('parent', currentSys);
+				gr.addQuery('u_store_status', 'O');
+				gr.query();
+				while(gr.next()){
+					locationsArray.push(this._toObject(gr));
+				}
+			}
+		}
+		if(i < 19 && !flagType){
+			return this._getLocations(locationsArray, type, ++i);
+		}else{
+			return locationsArray;
+		} 
+	},
+	
+	/**************************************************************************
+	* Creates an RDC request record with list of locations to be updated
+	*
+	* @method createRecord
+	* @param {String} table - The table name of the RDC request table
+	* @param {String} locations - Comma separated list of store locations	
+	* @return {String} sys_id of the new record.
+	*************************************************************************/
+	createRecord : function(table, obj){
+		var gr = new GlideRecord(table);
+		gr.initialize();
+		for(var prop in obj){
+			gr[prop] = obj[prop];
+		}
+		gr.insert();
+		
+		return {number: gr.number.toString(), sys_id: gr.sys_id.toString()};
+	},	
+	
+	/**************************************************************************
+	* Gets the workstations associated to an RDC update request
+	*
+	* @method getWorkstationList
+	* @param {String} request - The sys_id of the RDC request
+	* @return {Array} ordered array of worstation objects
+	*************************************************************************/
+	getWorkstationList : function(request){
+		var workstationsArray = [];
+		
+		var gr = new GlideRecord('x_aaro2_rdc_cred_workstations');
+		gr.addQuery('request', request);
+		gr.orderBy('order');
+		gr.query();
+
+		while (gr.next()){
+			workstationsArray.push(this._toObject(gr));
+		}
+		
+		return workstationsArray;
+	},
+	
+
+	/**************************************************************************
+	* Converts a GlideRecord to an Object
+	* https://community.servicenow.com/community/develop/blog/2015/09/24/
+	* community-code-snippets--gliderecord-to-object-array-conversion
+	*
+	* @method toObject
+	* @param {GlideRecord} recordToPackage - a GlideRecord
+	* @return {Object} Object version of GlideRecord
+	*************************************************************************/	
+	_toObject : function(recordToPackage) { 
+		var packageToSend = {};
+
+		for (var property in recordToPackage) {
+			try {
+				packageToSend[property] = recordToPackage[property].getDisplayValue();
+			}
+			catch(err){}
+		}
+
+		return packageToSend;
+	},	
+	
+
+    type: 'Utils'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>xxpgrupe</sys_created_by>
+        <sys_created_on>2017-03-10 15:01:37</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>efa1b5a74f9db6403ad149cf0310c745</sys_id>
+        <sys_mod_count>41</sys_mod_count>
+        <sys_name>Utils</sys_name>
+        <sys_package display_value="Remote Desktop Credential Management" source="x_aaro2_rdc_cred">18fc65ab4f5db6403ad149cf0310c7ef</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Remote Desktop Credential Management">18fc65ab4f5db6403ad149cf0310c7ef</sys_scope>
+        <sys_update_name>sys_script_include_efa1b5a74f9db6403ad149cf0310c745</sys_update_name>
+        <sys_updated_by>xxpgrupe</sys_updated_by>
+        <sys_updated_on>2017-03-21 13:57:02</sys_updated_on>
+    </sys_script_include>
+</record_update>

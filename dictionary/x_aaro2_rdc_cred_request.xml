@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element extends="task" label="Remote Desktop Request" max_length="40" name="x_aaro2_rdc_cred_request" type="collection">
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Failed Locations" max_length="4000" name="failed_locations" reference="core_company" type="glide_list"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Locations" max_length="4000" name="locations" reference="core_company" type="glide_list"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Stage" max_length="80" name="stage" read_only="true" type="workflow">
+            <choice>
+                <element label="Complete" value="2"/>
+                <element label="Processing" value="1"/>
+            </choice>
+        </element>
+    </element>
+</database>

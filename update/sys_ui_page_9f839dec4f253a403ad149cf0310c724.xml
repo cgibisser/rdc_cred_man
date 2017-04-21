@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script/>
+        <description>This page will allow the user to select which stores should receive updated RDC credentials.</description>
+        <direct>true</direct>
+        <endpoint>x_aaro2_rdc_cred_SelectStores.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<form name="selectStores" novalidate="true">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1>Remote Desktop Credential Management</h1>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						<div class="panel panel-info">
+<!-- 							<div style="height: 20px; padding: 1px 15px" class="panel-heading">
+							</div> -->
+							<div class="panel-body">
+								<p>By processing this request, we will update your RDC access password to match your current POS password. </p>
+								<p>Going forward, each time you update your POS password, please use this automated request to update your RDC password to match your new POS codes.</p>
+							</div>												  
+						</div>
+					</div>
+				</div>
+				<div class="spacer"></div>
+				<div class="alert alert-danger" ng-show="showError" >Oh no! In order to continue, please select at least one store.</div>
+				<div class="storeDnD row">
+					<div class="col-md-10 col-md-offset-1">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">{{models[0].listName}}</h3>
+							</div>
+							<div class="panel-body">
+								<ul class="ul_scroll" dnd-list="models[0]" dnd-drop="onDrop(models[0], item, index)">
+									<li ng-repeat="item in models[0].items"
+										dnd-draggable="getSelectedItemsIncluding(models[0], item)"
+										dnd-dragstart="onDragstart(models[0], event)"
+										dnd-moved="onMoved(models[0])"
+										dnd-dragend="models[0].dragging = false"
+										dnd-selected="item.selected = !item.selected"
+										ng-class="{'selected': item.selected}"
+										ng-hide="models[0].dragging ${AMP}${AMP} item.selected"
+									>
+										{{item.name}}
+									</li>
+								</ul>		
+							</div>
+						</div>	
+					</div>
+<!-- COMMENTING OUT CODE THAT WOULD ALLOW THE USER TO SELECT STORES
+						<div class="col-xs-2">
+						<div class="select_buttons">
+							<button type="button" class="btn btn-default btn-block" ng-click="selectAll(0,1)" ng-disabled="submitFlag">Select All</button>
+							<button type="button" class="btn btn-default btn-block" ng-click="transferSelected('right')" ng-disabled="submitFlag"><i class="glyphicon glyphicon-menu-right"></i></button>
+							<button type="button" class="btn btn-default btn-block" ng-click="transferSelected('left')" ng-disabled="submitFlag"><i class="glyphicon glyphicon-menu-left"></i></button>
+							<button type="button" class="btn btn-default btn-block" ng-click="selectAll(1,0)" ng-disabled="submitFlag">Remove All</button>
+						</div>
+					</div>					
+					<div class="col-md-5">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title required">{{models[1].listName}}</h3>
+							</div>
+							<div class="panel-body">
+								<ul class="ul_scroll" dnd-list="models[1]" dnd-drop="onDrop(models[1], item, index)">
+									<li ng-repeat="item in models[1].items"
+										dnd-draggable="getSelectedItemsIncluding(models[1], item)"
+										dnd-dragstart="onDragstart(models[1], event)"
+										dnd-moved="onMoved(models[1])"
+										dnd-dragend="models[1].dragging = false"
+										dnd-selected="item.selected = !item.selected"
+										ng-class="{'selected': item.selected}"
+										ng-hide="models[1].dragging ${AMP}${AMP} item.selected"
+										>
+										{{item.name}}
+									</li>
+								</ul>		
+							</div>
+						</div>	
+					</div>	 -->					
+				</div>
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3">
+						<div class="panel panel-info">
+							<div style="height: 20px; padding: 1px 15px" class="panel-heading">
+								Instructions:
+							</div>
+							<div class="panel-body">
+								<p>Stores may be re-ordered by dragging them up/down.</p>
+								<p>Click on items to select/unselect them. If dragging, all selected items will be moved at once.</p>
+							</div>												  
+						</div>
+					</div>
+				</div>
+				<div class="pull-right">
+					<small>* Required field</small>
+				</div>
+			</div>	
+			<div class="panel-footer">
+				<button class="btn btn-success pull-right navbutton" ng-disabled="submitFlag" ng-click="submit()">Submit</button>
+<!-- 				<button class="btn btn-success pull-right navbutton" ng-disabled="!storeSelected || submitFlag" ng-click="submit()">Submit</button>		 -->	
+			</div>	
+		</div>
+	</form>
+</j:jelly>]]></html>
+        <name>SelectStores</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>xxcjgibiss</sys_created_by>
+        <sys_created_on>2017-03-13 15:01:41</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>9f839dec4f253a403ad149cf0310c724</sys_id>
+        <sys_mod_count>104</sys_mod_count>
+        <sys_name>SelectStores</sys_name>
+        <sys_package display_value="Remote Desktop Credential Management" source="x_aaro2_rdc_cred">18fc65ab4f5db6403ad149cf0310c7ef</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Remote Desktop Credential Management">18fc65ab4f5db6403ad149cf0310c7ef</sys_scope>
+        <sys_update_name>sys_ui_page_9f839dec4f253a403ad149cf0310c724</sys_update_name>
+        <sys_updated_by>xxcjgibiss</sys_updated_by>
+        <sys_updated_on>2017-04-20 13:56:33</sys_updated_on>
+    </sys_ui_page>
+</record_update>

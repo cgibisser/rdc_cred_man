@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>xxpgrupe</sys_created_by>
+        <sys_created_on>2017-03-17 17:21:50</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>498a16bd4f2536401491a50f0310c715</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>.x_aaro2_rdc_cred.admin</sys_name>
+        <sys_package display_value="Remote Desktop Credential Management" source="x_aaro2_rdc_cred">18fc65ab4f5db6403ad149cf0310c7ef</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Remote Desktop Credential Management">18fc65ab4f5db6403ad149cf0310c7ef</sys_scope>
+        <sys_security_acl display_value="x_aaro2_rdc_cred_request.locations">688a9ebd4f2536401491a50f0310c71f</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_498a16bd4f2536401491a50f0310c715</sys_update_name>
+        <sys_updated_by>xxpgrupe</sys_updated_by>
+        <sys_updated_on>2017-03-17 17:21:50</sys_updated_on>
+        <sys_user_role display_value="x_aaro2_rdc_cred.admin" name="x_aaro2_rdc_cred.admin">802dade34f9db6403ad149cf0310c781</sys_user_role>
+        <transaction_id/>
+    </sys_security_acl_role>
+</record_update>

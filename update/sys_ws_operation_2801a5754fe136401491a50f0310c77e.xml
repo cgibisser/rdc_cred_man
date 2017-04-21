@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri>/api/x_aaro2_rdc_cred/utils/updateWorkstationStatus</default_operation_uri>
+        <enforce_acl/>
+        <http_method>POST</http_method>
+        <name>updateWorkstationStatus</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+	//used by the UI Macro on the task for the NSC to mark workstations updated
+    var utils = new Utils(), requestBody = request.body.data;
+	return utils.updateWorkstationStatus(requestBody);
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_aaro2_rdc_cred/v1/utils/updateWorkstationStatus</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/updateWorkstationStatus</relative_path>
+        <request_example/>
+        <requires_acl_authorization>false</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>xxpgrupe</sys_created_by>
+        <sys_created_on>2017-03-17 13:16:58</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>2801a5754fe136401491a50f0310c77e</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>updateWorkstationStatus</sys_name>
+        <sys_package display_value="Remote Desktop Credential Management" source="x_aaro2_rdc_cred">18fc65ab4f5db6403ad149cf0310c7ef</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Remote Desktop Credential Management">18fc65ab4f5db6403ad149cf0310c7ef</sys_scope>
+        <sys_update_name>sys_ws_operation_2801a5754fe136401491a50f0310c77e</sys_update_name>
+        <sys_updated_by>xxrdoll</sys_updated_by>
+        <sys_updated_on>2017-04-20 14:18:47</sys_updated_on>
+        <web_service_definition display_value="utils">6077f52b4f9db6403ad149cf0310c7a5</web_service_definition>
+        <web_service_version display_value="v1">f49731e74f9db6403ad149cf0310c728</web_service_version>
+    </sys_ws_operation>
+</record_update>

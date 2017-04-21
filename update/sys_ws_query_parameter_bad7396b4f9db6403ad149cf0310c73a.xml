@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ws_query_parameter">
+    <sys_ws_query_parameter action="INSERT_OR_UPDATE">
+        <example_value>5f6e1cd5946b99008e2c16c0709ed17e</example_value>
+        <name>userSys</name>
+        <required>false</required>
+        <short_description>The sys_id of a user</short_description>
+        <sys_class_name>sys_ws_query_parameter</sys_class_name>
+        <sys_created_by>xxpgrupe</sys_created_by>
+        <sys_created_on>2017-03-10 15:04:04</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>bad7396b4f9db6403ad149cf0310c73a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>userSys</sys_name>
+        <sys_package display_value="Remote Desktop Credential Management" source="x_aaro2_rdc_cred">18fc65ab4f5db6403ad149cf0310c7ef</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Remote Desktop Credential Management">18fc65ab4f5db6403ad149cf0310c7ef</sys_scope>
+        <sys_update_name>sys_ws_query_parameter_bad7396b4f9db6403ad149cf0310c73a</sys_update_name>
+        <sys_updated_by>xxpgrupe</sys_updated_by>
+        <sys_updated_on>2017-03-10 15:04:04</sys_updated_on>
+        <web_service_definition display_value="utils">6077f52b4f9db6403ad149cf0310c7a5</web_service_definition>
+    </sys_ws_query_parameter>
+</record_update>

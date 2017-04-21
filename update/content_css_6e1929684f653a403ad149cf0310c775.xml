@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="content_css">
+    <content_css action="INSERT_OR_UPDATE">
+        <name>Custom_CSS</name>
+        <style>body {&#13;
+   padding: 0px !important;&#13;
+   background: url(noc_background_header.pngx) no-repeat scroll center top/100% #e5e5e5;&#13;
+}&#13;
+&#13;
+.content {&#13;
+    padding-top: 25px;&#13;
+}&#13;
+&#13;
+.spacer{&#13;
+    height: 25px;&#13;
+}&#13;
+&#13;
+.panel{&#13;
+    max-width: 990px;&#13;
+    margin-left: auto;&#13;
+    margin-right: auto;&#13;
+}&#13;
+&#13;
+.panel-footer {&#13;
+    height: 50px;&#13;
+}&#13;
+&#13;
+h1 {&#13;
+    font-size: 18px;&#13;
+    color: #001DA2;&#13;
+}&#13;
+&#13;
+.info-panel-heading {&#13;
+    padding: 1px 15px;&#13;
+}&#13;
+&#13;
+.info-panel-body {&#13;
+    background: #ccccff;&#13;
+    border-color: black;&#13;
+}&#13;
+&#13;
+.panel-title.required:after {&#13;
+  content:"*";&#13;
+  color:red;&#13;
+}&#13;
+&#13;
+.select_buttons{&#13;
+    padding-top: 100px;&#13;
+}&#13;
+&#13;
+.select_buttons button{&#13;
+    overflow: hidden;&#13;
+    white-space: nowrap;&#13;
+    text-overflow: ellipsis;&#13;
+}&#13;
+&#13;
+.btn:focus {&#13;
+  outline: none;&#13;
+  background-color: #fff;&#13;
+}&#13;
+&#13;
+.ul_scroll{&#13;
+    overflow-y: scroll;&#13;
+    height: 200px;&#13;
+}&#13;
+&#13;
+/**&#13;
+ * The dnd-list should always have a min-height,&#13;
+ * otherwise you can't drop into it once it's empty&#13;
+ */&#13;
+.storeDnD ul[dnd-list] {&#13;
+    min-height: 42px;&#13;
+    padding-left: 0px;&#13;
+}&#13;
+&#13;
+/**&#13;
+ * An element with .dndPlaceholder class will be&#13;
+ * added to the dnd-list while the user is dragging&#13;
+ * over it.&#13;
+ */&#13;
+.storeDnD ul[dnd-list] .dndPlaceholder {&#13;
+    background-color: #ddd;&#13;
+    display: block;&#13;
+    min-height: 42px;&#13;
+}&#13;
+&#13;
+.storeDnD ul[dnd-list] li {&#13;
+    background-color: #fff;&#13;
+    border: 1px solid #ddd;&#13;
+    border-top-right-radius: 4px;&#13;
+    border-top-left-radius: 4px;&#13;
+    display: block;&#13;
+    margin-bottom: -1px;&#13;
+    padding: 10px 15px;&#13;
+}&#13;
+&#13;
+/**&#13;
+ * Show selected elements in green&#13;
+ */&#13;
+.storeDnD  ul[dnd-list] li.selected {&#13;
+    background-color: #dff0d8;&#13;
+    color: #3c763d;&#13;
+}</style>
+        <sys_class_name>content_css</sys_class_name>
+        <sys_created_by>xxcjgibiss</sys_created_by>
+        <sys_created_on>2017-03-13 16:33:38</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>6e1929684f653a403ad149cf0310c775</sys_id>
+        <sys_mod_count>42</sys_mod_count>
+        <sys_name>Custom_CSS</sys_name>
+        <sys_package display_value="Remote Desktop Credential Management" source="x_aaro2_rdc_cred">18fc65ab4f5db6403ad149cf0310c7ef</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Remote Desktop Credential Management">18fc65ab4f5db6403ad149cf0310c7ef</sys_scope>
+        <sys_update_name>content_css_6e1929684f653a403ad149cf0310c775</sys_update_name>
+        <sys_updated_by>xxcjgibiss</sys_updated_by>
+        <sys_updated_on>2017-03-16 18:42:56</sys_updated_on>
+        <type>local</type>
+        <url/>
+    </content_css>
+</record_update>

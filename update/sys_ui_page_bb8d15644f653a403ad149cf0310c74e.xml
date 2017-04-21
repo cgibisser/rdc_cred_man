@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script/>
+        <description>This page will control the loading of controllers, modules, etc.</description>
+        <direct>false</direct>
+        <endpoint>x_aaro2_rdc_cred_Main.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<!--load libraries -->
+	<g:requires name="x_aaro2_rdc_cred.Bootstrap_Min_v3_3_7.jsdbx" />
+<!-- 	<g:requires name="x_aaro2_cred_man.jQuery_v3_1_0.jsdbx" /> -->
+	<g:requires name="x_aaro2_rdc_cred.loading_bar_min.jsdbx" />
+	<g:requires name="x_aaro2_rdc_cred.dnd_v2_1_0.jsdbx" />  <!-- Angular Drag&Drop library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+	<link href="6e1929684f653a403ad149cf0310c775.cssdbx" rel="stylesheet" type="text/css"></link> <!-- //'Custom CSS' stylesheet -->
+
+	
+	<script>
+		(function() {
+			var credentialApp = angular.module("credentialApp", ["ngRoute", 'dndLists']);
+		
+			credentialApp.config(function($routeProvider) {
+				$routeProvider
+				.when("/", {
+					templateUrl : "x_aaro2_rdc_cred_SelectStores.do",
+					controller : "selectStoresCtrl"
+				})
+				.when("/progress", {
+					templateUrl : "x_aaro2_rdc_cred_Submitted.do",
+					controller : "submittedCtrl"
+				})
+				.otherwise({
+					redirectTo : "/"
+				});
+			});
+		
+		/*************************************** formData ****************************************************/	
+
+			credentialApp.factory("formData", function(){
+		
+				return formData = {
+					selectedStoreArray : [],      //the array of stores selected by the user
+					sys_id : '',                  //sys_id of the request record that is created   
+					recordNumber : '',            //record number of the request record that is created  	
+					workstationArray : []         //array containing workstations located in the selected stores
+ 				};
+			});
+		
+		
+		
+		/*************************************** Utils ****************************************************/	
+		
+			credentialApp.factory("utils", ["$http", function($http){
+				return{
+					getUserLocations : function(userSys){
+						return $http({
+							method : 'GET',
+							url : '/api/x_aaro2_rdc_cred/utils/getUserLocations?userSys=' + userSys,
+							headers : {
+								'X-UserToken' : g_ck //The global page variable storing the user token
+							}
+						});
+					},
+
+					createRecord : function(recordObj){
+						return $http({
+							method : 'POST',
+							url : '/api/x_aaro2_rdc_cred/utils/createRecord',
+							headers : {
+								'X-UserToken' : g_ck //The global page variable storing the user token
+							},
+							data : recordObj
+						});
+					},
+		
+					getWorkstationList : function(recordSys){
+						return $http({
+							method : 'GET',
+							url : '/api/x_aaro2_rdc_cred/utils/getWorkstationList?recordSys=' + recordSys,
+							headers : {
+								'X-UserToken' : g_ck //The global page variable storing the user token
+							}
+						});
+					},
+				};
+			}]);
+		
+
+		/*************************************** SelectStore Controller ********************************/	
+		
+			credentialApp.controller("selectStoresCtrl", ["$scope", "$location", "formData", "utils", function($scope, $location, formData, utils){
+				$scope.formData = formData;
+				$scope.formData.selectedStoreArray = [];
+				$scope.storeSelected = false;
+				$scope.showError = false;
+				$scope.models = [
+				  {listName: "Available Stores", items: [], dragging: false},
+				  {listName: "Selected Stores", items: [], dragging: false}
+				];
+
+				populateAvailableStore = function(){
+					utils.getUserLocations('${gs.getUserID()}').then(function(response){
+						for (var i = 0; i != response.data.result.length; i++){
+							$scope.models[0].items.push(response.data.result[i]);		
+						}
+						$scope.models[0].items.sort(compareStores);
+					});
+				};
+
+				populateAvailableStore();
+
+				/**
+				 * dnd-dragging determines what data gets serialized and send to the receiver
+				 * of the drop. While we usually just send a single object, we send the array
+				 * of all selected items here.
+				 */
+				$scope.getSelectedItemsIncluding = function(list, item) {
+					item.selected = true;
+						return list.items.filter(function(item) { 
+							return item.selected; 
+						});
+				};		
+
+				/**
+				 * We set the list into dragging state, meaning the items that are being
+				 * dragged are hidden. We also use the HTML5 API directly to set a custom
+				 * image, since otherwise only the one item that the user actually dragged
+				 * would be shown as drag image.
+				 */
+				$scope.onDragstart = function(list, event) {
+					list.dragging = true;
+					//if (event.dataTransfer.setDragImage) {
+					// var img = new Image();
+					// img.src = 'dndIcon.png';
+					// event.dataTransfer.setDragImage(img, 0, 0);
+					//}
+				};
+
+				/**
+				 * In the dnd-drop callback, we now have to handle the data array that we
+				 * sent above. We handle the insertion into the list ourselves. By returning
+				 * true, the dnd-list directive won't do the insertion itself.
+				 */
+				$scope.onDrop = function(list, items, index) {
+					angular.forEach(items, function(item) { 
+						item.selected = false;
+					});
+					list.items = list.items.slice(0, index).concat(items).concat(list.items.slice(index));
+					$scope.validateStoreSelected();		
+					return true;
+				}
+
+				/**
+				 * Last but not least, we have to remove the previously dragged items in the
+				 * dnd-moved callback.
+				 */
+				$scope.onMoved = function(list) {
+					list.items = list.items.filter(function(item) {
+						return !item.selected;
+					});
+					$scope.validateStoreSelected();	
+				};
+
+				compareStores = function(a, b){
+					if (b.name > a.name) {
+						return -1;
+					}
+					if (a.name > b.name) {
+						return 1;
+					}
+				}
+
+				$scope.selectAll = function(fromList, toList){
+					for (var i = 0; i != $scope.models[fromList].items.length; i++){
+						$scope.models[toList].items.push($scope.models[fromList].items[i]);
+						$scope.storeSelected = true;
+					}
+					$scope.models[fromList].items.splice(0, $scope.models[fromList].items.length);
+					if (toList == 0){
+						$scope.models[0].items.sort(compareStores);
+						$scope.storeSelected = false;
+					}
+				}		
+
+				$scope.transferSelected = function(direction){
+					if (direction == 'right'){
+						for (var i = 0; i != $scope.models[0].items.length; i++){
+							if ($scope.models[0].items[i].selected == true){
+								$scope.models[0].items[i].selected = false;
+								$scope.models[1].items.push($scope.models[0].items.splice(i,1)[0]);	
+								i--;
+								$scope.storeSelected = true;	
+							}
+						}
+					} else if (direction == 'left'){
+						for (var j = 0; j != $scope.models[1].items.length; j++){
+							if ($scope.models[1].items[j].selected == true){
+								$scope.models[1].items[j].selected = false;
+								$scope.models[0].items.push($scope.models[1].items.splice(j,1)[0]);	
+								j--;
+								$scope.validateStoreSelected();
+							}
+						}
+						$scope.models[0].items.sort(compareStores);
+					}
+				}	
+
+				$scope.validateStoreSelected = function (){
+					if ($scope.models[1].items.length > 0){
+						$scope.storeSelected = true;
+					} else {
+						$scope.storeSelected = false;
+					}
+				}
+
+				$scope.submit = function (){
+// COMMENTING OUT CODE THAT ALLOWS THE USER TO SELECT STORES
+//					if ($scope.storeSelected){
+						$scope.submitFlag = true;
+						var recordObj = {};
+						var page = location.pathname;		
+						var fromEss;
+							if(page.indexOf('/ess/') > -1) {
+								fromEss = true;
+							}else{
+								fromEss = false;
+							}
+//						for (var i = 0; i != $scope.models[1].items.length; i++){
+//							$scope.formData.selectedStoreArray.push($scope.models[1].items[i].sys_id);							
+//						}
+						for (var i = 0; i != $scope.models[0].items.length; i++){
+							$scope.formData.selectedStoreArray.push($scope.models[0].items[i].sys_id);							
+						}		
+						recordObj = {
+								locations : $scope.formData.selectedStoreArray.toString(),
+								u_ess_request_for : window.NOW.user.userID,
+								u_from_ess : fromEss
+						};
+
+						var handleSuccess = function(response, status) {
+							$scope.formData.recordNumber = response.result.number.toString();
+							$scope.formData.sys_id = response.result.sys_id.toString();
+							$location.path("/progress");		
+						}
+						utils.createRecord(recordObj).success(handleSuccess);	
+//					} else {
+//						$scope.showError = true;
+//					}
+				}
+
+			}]);
+		
+		/*************************************** Submitted Controller ********************************/	
+		
+			credentialApp.controller("submittedCtrl", ["$scope", "$location", "formData", function($scope, $location, formData){
+				$scope.formData = formData;
+		
+				if($scope.formData.recordNumber == ''){
+					$location.path("/");
+				}		
+			}]);		
+		
+		})(); // End of function encapsulation
+
+	</script>
+	<div class="credentialPortalContent container-fluid content" ng-app="credentialApp">
+		<div class="ng-view"></div>
+	</div>
+	
+</j:jelly>]]></html>
+        <name>Main</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>xxcjgibiss</sys_created_by>
+        <sys_created_on>2017-03-13 16:16:11</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>bb8d15644f653a403ad149cf0310c74e</sys_id>
+        <sys_mod_count>225</sys_mod_count>
+        <sys_name>Main</sys_name>
+        <sys_package display_value="Remote Desktop Credential Management" source="x_aaro2_rdc_cred">18fc65ab4f5db6403ad149cf0310c7ef</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Remote Desktop Credential Management">18fc65ab4f5db6403ad149cf0310c7ef</sys_scope>
+        <sys_update_name>sys_ui_page_bb8d15644f653a403ad149cf0310c74e</sys_update_name>
+        <sys_updated_by>xxcjgibiss</sys_updated_by>
+        <sys_updated_on>2017-04-18 12:53:04</sys_updated_on>
+    </sys_ui_page>
+</record_update>

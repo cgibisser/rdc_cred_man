@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_auth_profile_basic">
+    <sys_auth_profile_basic action="INSERT_OR_UPDATE">
+        <name>NSCToolsQA</name>
+        <password>ayMD/KL3UhyICn2pe3znZW+DTrI5QXNE</password>
+        <sys_class_name>sys_auth_profile_basic</sys_class_name>
+        <sys_created_by>xxcjgibiss</sys_created_by>
+        <sys_created_on>2017-03-13 13:53:28</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>f334c9684f253a403ad149cf0310c70c</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>NSCToolsQA</sys_name>
+        <sys_package display_value="Remote Desktop Credential Management" source="x_aaro2_rdc_cred">18fc65ab4f5db6403ad149cf0310c7ef</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Remote Desktop Credential Management">18fc65ab4f5db6403ad149cf0310c7ef</sys_scope>
+        <sys_update_name>sys_auth_profile_basic_f334c9684f253a403ad149cf0310c70c</sys_update_name>
+        <sys_updated_by>xxcjgibiss</sys_updated_by>
+        <sys_updated_on>2017-03-13 14:25:40</sys_updated_on>
+        <username>aaron\ServiceNowUserSVC</username>
+    </sys_auth_profile_basic>
+</record_update>

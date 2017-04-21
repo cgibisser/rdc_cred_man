@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_macro">
+    <sys_ui_macro action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>general</category>
+        <description>This will hold the workstation information  for the task.</description>
+        <media_type/>
+        <name>Workstation Details</name>
+        <scoped_name>x_aaro2_rdc_cred_Workstation Details</scoped_name>
+        <sys_class_name>sys_ui_macro</sys_class_name>
+        <sys_created_by>xxpgrupe</sys_created_by>
+        <sys_created_on>2017-03-17 12:41:39</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>ee6a99b14fe136401491a50f0310c7a4</sys_id>
+        <sys_mod_count>56</sys_mod_count>
+        <sys_name>Workstation Details</sys_name>
+        <sys_package display_value="Remote Desktop Credential Management" source="x_aaro2_rdc_cred">18fc65ab4f5db6403ad149cf0310c7ef</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Remote Desktop Credential Management">18fc65ab4f5db6403ad149cf0310c7ef</sys_scope>
+        <sys_update_name>sys_ui_macro_ee6a99b14fe136401491a50f0310c7a4</sys_update_name>
+        <sys_updated_by>xxrdoll</sys_updated_by>
+        <sys_updated_on>2017-04-20 14:19:19</sys_updated_on>
+        <xml><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<g2:evaluate var="jvar_workstation" object="true">
+		var id = RP.getParameterValue('sys_id');
+		var taskGR = new GlideRecord('x_aaro2_rdc_cred_task');
+		taskGR.addQuery('sys_id', id);
+		taskGR.query();
+		taskGR.next();
+		var workstationGR = new GlideRecord('x_aaro2_rdc_cred_workstations');
+		workstationGR.addQuery('request', taskGR.parent.sys_id);
+		workstationGR.addQuery('status', '2');
+		workstationGR.orderBy('order');
+		workstationGR.query();
+		workstationGR;
+	</g2:evaluate>
+	<div class="col-lg-1 col-lg-offset-1 col-md-12">
+		<label class="control-label">Request Details</label>
+	</div>
+	<div class="col-lg-9 col-md-12 details">
+		<div class="panel panel-default request_details">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-xs-3">
+						<dt>User:</dt>
+						<dd>$[taskGR.parent.u_ess_request_for.getDisplayValue()]</dd>
+					</div>
+					<div class="col-xs-offset-3 col-xs-3">
+						<dt>User POS ID:</dt>
+						<dd>$[taskGR.parent.u_ess_request_for.u_pos_user_id]</dd>
+					</div>
+				</div>
+				<j2:if test="$[taskGR.parent.failed_locations != '' &amp;&amp; taskGR.short_description == 'Manually add rdc access to stores']">
+					<div class="row">
+						<div class="col-xs-6">
+							<dt>Failed Locations:</dt>
+							<dd>$[taskGR.parent.failed_locations.getDisplayValue()]</dd>
+						</div>
+					</div>
+				</j2:if>
+			</div>
+		</div>
+	</div>
+	<j2:if test="$[workstationGR.hasNext()]">
+		<div class="col-lg-1 col-lg-offset-1 col-md-12">
+			<label class="control-label">Failed Workstations:</label>
+		</div>
+		<ul class="col-lg-9 col-md-12 list-group">
+			<j2:while test="$[workstationGR.next()]">
+				<li class="list-group-item list-group-item-action">
+					<div class="row">
+						<div class="col-xs-6">
+							$[workstationGR.getValue('name')]
+						</div>
+						<div class="col-xs-6">
+							<input type="checkbox" id="$[workstationGR.sys_id]" class="option" onclick="setStatus('$[workstationGR.sys_id]')">Complete</input>
+						</div>
+					</div>
+				</li>
+			</j2:while>
+		</ul>
+	</j2:if>
+	
+	<script>
+		function setStatus(sysId){
+			
+			var status;
+			if(document.getElementById(sysId).checked == true){
+				status = 3; //complete
+			} else if(document.getElementById(sysId).checked == false){
+				status = 2; //FAILED
+			}
+		
+			var requestBody = JSON.stringify({'ID' : sysId, 'status' : status});
+			var client=new XMLHttpRequest();
+			client.open("post","/api/x_aaro2_rdc_cred/v1/utils/updateWorkstationStatus");
+			client.setRequestHeader('Accept','application/json');
+			client.setRequestHeader('Content-Type','application/json');
+			//Eg. UserName="admin", Password="admin" for this code sample.
+			client.setRequestHeader('X-UserToken', g_ck);
+			client.onreadystatechange = function() { 
+				if(this.readyState == this.DONE) {
+					var response = this.response;
+					response = JSON.parse(response);
+					if(response.result == undefined){
+						alert("Unable to update the workstation record with new status. Please try again.");
+						if(status == 3){ //if they were trying to mark it complete
+							document.getElementById(sysId).checked = false; //set back to unchecked
+						} else if(status == 2){ //they were trying to uncheck complete
+							document.getElementById(sysId).checked = true; //set back to checked
+						}
+						
+					}
+				}
+			}; 
+			client.send(requestBody);
+		}
+	</script>
+	<style>
+		.list-group, .details {
+			padding-left: 13px !important;
+			padding-right: 65px;
+		}
+		.option {
+			margin: 0px 0 0 !important;
+			margin-right: 6px !important;
+		}
+	</style>
+</j:jelly>]]></xml>
+    </sys_ui_macro>
+</record_update>

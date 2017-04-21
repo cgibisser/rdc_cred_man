@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>The name of the group that all manual task should go to. </description>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_aaro2_rdc_cred.manual_task</name>
+        <read_roles>x_aaro2_rdc_cred.admin</read_roles>
+        <suffix>manual_task</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>xxpgrupe</sys_created_by>
+        <sys_created_on>2017-03-14 18:48:53</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>958157f04fadb2401491a50f0310c7e0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_aaro2_rdc_cred.manual_task</sys_name>
+        <sys_package display_value="Remote Desktop Credential Management" source="x_aaro2_rdc_cred">18fc65ab4f5db6403ad149cf0310c7ef</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Remote Desktop Credential Management">18fc65ab4f5db6403ad149cf0310c7ef</sys_scope>
+        <sys_update_name>sys_properties_958157f04fadb2401491a50f0310c7e0</sys_update_name>
+        <sys_updated_by>xxpgrupe</sys_updated_by>
+        <sys_updated_on>2017-03-14 18:48:53</sys_updated_on>
+        <type>string</type>
+        <value>NSC CS Level 1</value>
+        <write_roles>x_aaro2_rdc_cred.admin</write_roles>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=958157f04fadb2401491a50f0310c7e0"/>
+</record_update>
